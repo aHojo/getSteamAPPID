@@ -1,8 +1,9 @@
 var content = [];
 
 for (let i = 0; i < steamApps.applist.apps.length; i++){
-    var deleteObj = /\b(beta|trailer|movie|demo|teaser|server|DLC|map\spack|multiplayer\sskins|weapons\spack|weapons\sskins|starter\spack|premium\spack|pre.*order|sdk|player\sprofiles|Workshop|creation\sclub|texture\spack)\b/gi;
-    if (deleteObj.test(steamApps.applist.apps[i].name)) {
+    var deleteObj = /\b(beta|trailer|movie|demo|teaser|server|DLC|map\spack|pack|multiplayer\sskins|weapons\spack|weapons\sskins|starter\spack|premium\spack|pre.*order|sdk|player\sprofiles|Workshop|creation\sclub|texture\spack)\b/gi;
+    var deleteObj2 = /\bRU\b/g;
+    if (deleteObj.test(steamApps.applist.apps[i].name) || deleteObj2.test(steamApps.applist.apps[i].name)) {
         delete steamApps.applist.apps[i];
     } else {
         content.push({
@@ -16,7 +17,7 @@ for (let i = 0; i < steamApps.applist.apps.length; i++){
 
     console.log(content);
 function gameName (game) {
-    var gameSearch = game.split(' ').join(".*");
+    var gameSearch = game.split(' ').join("\\s");
     var gameSearchFull = '\\b^'+ gameSearch +'$\\b';
     console.log(gameSearch);
     var search = new RegExp(gameSearch, 'i');
@@ -25,6 +26,12 @@ function gameName (game) {
     for (let i = 0; i < content.length; i++) {
         if(content[i].name.match(search)) {
             console.log('Name:' + content[i].name + "\n" + "Appid: " + content[i].appid);
+           var searches = $('<div>')
+           searches.text(content[i].name);
+           searches.addClass('games');
+           searches.attr('data-appid', content[i].appid);
+           searches.attr('data-name', content[i].name);
+            $("#searchResults").append(searches);
         }
     }
     for (let i = 0; i < content.length; i++) {
@@ -34,4 +41,4 @@ function gameName (game) {
     }
 }
 
-gameName("Fallout 4");
+gameName("borderlands 2");
