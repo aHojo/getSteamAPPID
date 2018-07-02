@@ -1,0 +1,9 @@
+Header_image
+required_age
+
+
+Title and under
+name
+Metacritic.score
+
+about_the_game
